@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosWithAuth from "../utilities/axiosWithAuth";
+import ColorForm from "./ColorForm";
 
 const initialColor = {
   color: "",
@@ -21,10 +22,25 @@ const ColorList = ({ colors, updateColors }) => {
     // Make a put request to save your updated color
     // think about where will you get the id from...
     // where is is saved right now?
+
+    axiosWithAuth()
+      .put(`/colors/${colorToEdit.id}`, colorToEdit)
+      .then(res => {
+        console.log("Color edited successfully!\n", res);
+        updateColors(colors.map(color => color.id === res.data.id ? res.data : color));
+      })
+      .catch(err => console.log("Error editing color!\n", err));
   };
 
   const deleteColor = color => {
     // make a delete request to delete this color
+    axiosWithAuth()
+      .delete(`/colors/${color.id}`)
+      .then(res => {
+        console.log(`${color.color} successfully deleted!/n`, res);
+        updateColors(colors.filter(c => c.id !== color.id));
+      })
+      .catch(err => console.log("Error deleting: ", err));
   };
 
   return (
@@ -78,6 +94,7 @@ const ColorList = ({ colors, updateColors }) => {
       )}
       <div className="spacer" />
       {/* stretch - build another form here to add a color */}
+      <ColorForm updateColors={updateColors} />
     </div>
   );
 };
