@@ -42,10 +42,10 @@ They include an API that tells the server how to handle HTTP requests - what to 
 
 - [ ] Which HTTP methods can be mapped to the CRUD acronym that we use when interfacing with APIs/Servers.
 
-Create - Post
-Read - Get
-Update - Put
-Delete - Delete
+Create - POST
+Read - GET
+Update - PUT
+Delete - DELETE
 
 
 ## Project Set Up
